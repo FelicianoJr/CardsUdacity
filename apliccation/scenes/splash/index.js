@@ -9,15 +9,18 @@ import {
   TouchableOpacity
 } from "react-native";
 import Butt from "../../component/button";
-import { BaseView } from "../../util/style";
+import { BaseView, TopView } from "../../util/style";
 
 export default class Splash extends React.Component {
   static navigationOptions = {
-    title: "cadastrar"
+    title: "Novo Baralho"
   };
   render() {
     return (
       <BaseView>
+        <TopView>
+          <TextTitle> Novo Baralho</TextTitle>
+        </TopView>
         <Text style={styles.title}>Escreva o nome!</Text>
         <TextInput style={styles.txtInput} placeholder="informe" />
         <Butt text="salvar" />

@@ -1,28 +1,21 @@
 import React from "react";
-import {
-  View,
-  Text,
-  Button,
-  TouchableHighlight,
-  StyleSheet,
-  TouchableOpacity
-} from "react-native";
-import { BaseView, TextInput, TextTitle } from "../../util/style";
-import ButtonOption from "../../component/menuOption";
+import { BaseView, TextInput, TextTitle, TopView } from "../../util/style";
+import Button from "../../component/button";
 
-export default class Register extends React.Component {
+export default class Register extends React.PureComponent {
   static navigationOptions = {
-    title: "Cadastrar"
+    title: "Cadastrar "
   };
   render() {
     return (
       <BaseView>
-        <TextTitle> Digite uma pergunta seguido de uma resposta!</TextTitle>
-        <TextInput placeholder="Informe uma pergunta"/>
-        <TextInput placeholder="Informe uma resposta"/>
-        <ButtonOption icon="save" text="Salvar" />
+        <TopView>
+          <TextTitle> Digite uma pergunta seguido de uma resposta!</TextTitle>
+        </TopView>
+        <TextInput placeholder="Informe uma pergunta" />
+        <TextInput placeholder="Informe uma resposta" />
+        <Button text="Salvar" />
       </BaseView>
     );
   }
 }
-

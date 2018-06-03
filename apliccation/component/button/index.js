@@ -1,32 +1,14 @@
 import React from "react";
-import {
-  View,
-  Text,
-  TouchableHighlight,
-  StyleSheet,
-  TouchableOpacity
-} from "react-native";
+import { Touchable, TextButton } from "../../util/style";
+//import Icon from "react-native-vector-icons/FontAwesome";
 
-const Butt = ({ onpress, text }) => {
+const Button = ({ onpress, text, icon }) => {
   return (
-    <TouchableOpacity style={styles.button} onPress={onpress}>
-      <Text style={styles.text}>{text}</Text>
-    </TouchableOpacity>
+    <Touchable onPress={onpress}>
+      {/* {icon && <Icon name={icon} size={25} color="#9c27b0" />} */}
+      <TextButton>{text}</TextButton>
+    </Touchable>
   );
 };
 
-const styles = StyleSheet.create({
-  button: {
-    backgroundColor: "#68efad",
-    padding: 10,
-    alignItems: "center",
-    marginTop: 20
-  },
-  text: {
-    fontWeight: "bold",
-    fontSize: 16,
-    color: "#1b5e20"
-  }
-});
-
-export default Butt;
+export default Button;

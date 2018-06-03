@@ -1,40 +1,92 @@
-import React from "react"
-import { FlatList, StyleSheet, Text, View } from 'react-native';
-import Icon from "react-native-vector-icons/FontAwesome";
-import { BaseView } from "../../util/style";
-
+import React from "react";
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity
+} from "react-native";
+import { BaseView, SwipButton, Touchable } from "../../util/style";
+import { AsyncStorage } from "react-native";
+const DECKS_STORAGE_KEY = "flashcards:decks";
+const k = "#FFFFFF";
 
 export default class FlatListBasics extends React.Component {
-    render() {
-      return (
-        <BaseView>
-         <Icon name="rocket" size={30} color="#999"/>
-          <FlatList
-            data={[
-              {key: 'Devin'},
-              {key: 'Jackson'},
-              {key: 'James'},
-              {key: 'Joel'},
-              {key: 'John'},
-              {key: 'Jillian'},
-              {key: 'Jimmy'},
-              {key: 'Julie'},
-            ]}
-            renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}
-          />
-        </BaseView>
-      );
-    }
+  static navigationOptions = {
+    title: "Meus Baralhos"
+  };
+
+  // static navigationOptions = ({ navigation }) =>
+  // navOptions(navigation.state.params.title)
+
+  state = {
+    data: {}
+    // { id: "00", name: "Futebol", tt: "6" },
+    // { id: "01", name: "Ingles", tt: "10" },
+    //{ id: "02", name: "Doc Hudson", tt: "5" },
+    //{ id: "03", name: "Cruz Ramirez", tt: "2" }
+  };
+
+  componentDidMount() {
+    AsyncStorage.getItem(DECKS_STORAGE_KEY).then(result => {
+      console.log("result", result);
+      const decks = JSON.parse(result);
+      const soap = Object.keys(decks).map(title => ({
+        title,
+        numCards: decks[title].questions.length
+      }));
+      this.setState({ data: soap });
+      // if (result) {
+      //     const decks = JSON.parse(result)
+      //     return Object.keys(decks).map((title) => ({
+      //         title,
+      //         numCards: decks[title].questions.length
+      //     }))
+      // }
+      // return []
+    });
   }
-  
-  const styles = StyleSheet.create({
-    container: {
-     flex: 1,
-     paddingTop: 22
-    },
-    item: {
-      padding: 10,
-      fontSize: 18,
-      height: 44,
-    },
-  })
+
+  rend = ({ item }) => (
+    <SwipButton
+      color={k}
+      onPress={() => this.props.navigation.navigate("MenuCard", item)}
+    >
+      <Text style={styles.text}>{item.title}</Text>
+      <Text style={styles.text}>{item.numCards}</Text>
+    </SwipButton>
+  );
+
+  rend2 = ({ item }) => (
+    <TouchableOpacity style={{ paddingVertical: 30 }}>
+      <Text style={styles.text}>{item.title}</Text>
+      <Text style={styles.text}>{item.numCards}</Text>
+    </TouchableOpacity>
+  );
+
+  render() {
+    return (
+      <View>
+        <FlatList
+          data={this.state.data}
+          keyExtractor={item => item.title}
+          renderItem={this.rend}
+        />
+      </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  item: {
+    alignItems: "center",
+    margin: 4,
+    padding: 20,
+    fontSize: 16
+  },
+  text: {
+    color: "#9c27b0",
+    fontWeight: "bold",
+    fontSize: 16
+  }
+});
