@@ -17,8 +17,13 @@ export const BaseView = styled.View`
 `;
 
 export const TopView = styled.View`
-  height: 144px;
+  flex: 1;
   align-items: center;
+  justify-content: center;
+`;
+
+export const BottonView = styled.View`
+  flex:  ${(props) => props.weight || 1};;
 `;
 
 export const Touchable = styled.TouchableOpacity`
@@ -42,6 +47,7 @@ export const TextTitle = styled.Text`
   font-size: 26px;
   color: #ba68c8;
   font-weight: bold;
+  
 `;
 
 export const TextButton = styled.Text`
@@ -51,9 +57,18 @@ export const TextButton = styled.Text`
   font-weight: bold;
 `;
 
-export const SwipButton = styled.TouchableOpacity`
-  background-color: ${props => props.color || white};
+export const TouchableItem = styled.TouchableOpacity`
+  background-color: #FFFFFF;
   align-items: center;
   padding: 20px;
   margin-top: 2px;
 `;
+
+export const TxtSub = styled.Text`
+  font-size:  ${(props) => props.fsize || '16px'};
+  color: #ba68c8;
+  font-weight: bold;
+  padding-bottom:5px;
+`;
+
+

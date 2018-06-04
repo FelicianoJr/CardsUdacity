@@ -7,11 +7,10 @@
 import React, { Component } from "react";
 import { Platform, StyleSheet, View, Text } from "react-native";
 import { StackNavigator } from "react-navigation";
-import Splash from "./apliccation/scenes/splash";
 import Home from "./apliccation/scenes/home";
 import Register from "./apliccation/scenes/register";
-import FlatListBasics from "./apliccation/scenes/menu";
-import MenuCard from "./apliccation/scenes/MenuCard";
+import Decks from "./apliccation/scenes/decks";
+import AddCards from "./apliccation/scenes/addCards";
 import NewDeck from "./apliccation/scenes/NewDeck";
 
 const RootStack = StackNavigator(
@@ -19,20 +18,17 @@ const RootStack = StackNavigator(
     Home: {
       screen: Home
     },
-    Splash: {
-      screen: Splash
-    },
     Register: {
       screen: Register
     },
-    MenuCard: {
-      screen: MenuCard
+    AddCards: {
+      screen: AddCards
     },
     NewDeck: {
       screen: NewDeck
     },
-    Menu: {
-      screen: FlatListBasics
+    Decks: {
+      screen: Decks
     }
   },
   {
