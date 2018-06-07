@@ -25,7 +25,7 @@ export default class AddCards extends React.PureComponent {
           <Button text="Adicionar Cartão" onpress={this.addCartao} />
           <Button
             text="Iniciar Quiz"
-            onpress={() => this.props.navigation.goBack()}
+            onpress={() =>   this.props.navigation.navigate("Quiz")}
           />
         </BottonView>
       </BaseView>

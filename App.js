@@ -12,6 +12,7 @@ import Register from "./apliccation/scenes/register";
 import Decks from "./apliccation/scenes/decks";
 import AddCards from "./apliccation/scenes/addCards";
 import NewDeck from "./apliccation/scenes/NewDeck";
+import Quiz from "./apliccation/scenes/quiz";
 
 const RootStack = StackNavigator(
   {
@@ -29,6 +30,9 @@ const RootStack = StackNavigator(
     },
     Decks: {
       screen: Decks
+    },
+    Quiz: {
+      screen: Quiz
     }
   },
   {
