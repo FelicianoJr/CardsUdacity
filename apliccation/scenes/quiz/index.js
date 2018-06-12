@@ -1,74 +1,127 @@
 import React from "react";
 import FlipCard from "react-native-flip-card";
-import { View, Text, StyleSheet, TouchableOpacity,ProgressBarAndroid } from "react-native";
+import * as Progress from "react-native-progress";
+import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
+import {
+  Buttons,
+  TopView,
+  TxtSub,
+  ButtonCircle,
+  TextTitle
+} from "../../util/style";
+import { getDeck } from "../../api";
 
 export default class Quiz extends React.PureComponent {
   static navigationOptions = {
     title: "Quiz"
   };
 
+  state = {
+    questions: {},
+    index: 0,
+    count: 0,
+    progress: 0,
+    indeterminate: true
+  };
+
+  componentDidMount() {
+    const params = this.props.navigation.state.params;
+    getDeck(params).then(response => {
+      const questions = response.questions;
+      this.setState({ questions });
+    });
+    //this.animate();
+  }
+
+  onCorrect = () => {
+    this.setState(({ count, index }) => ({
+      count: count + 1,
+      index: index + 1
+    }));
+  };
+
+  onIncorrect = () => {
+    this.setState(({ index }) => ({
+      index: index + 1
+    }));
+  };
+
+  animate = () => {
+    let progress = 0;
+    this.setState({ progress });
+    setTimeout(() => {
+      this.setState({ indeterminate: false });
+      setInterval(() => {
+        progress += Math.random() / 5;
+        if (progress > 1) {
+          progress = 1;
+        }
+        this.setState({ progress });
+      }, 500);
+    }, 1000);
+  };
+
+  greeting = () => {
+    this.animate();
+    return (
+      <Progress.Circle
+        size={150}
+        showsText={true}
+        progress={this.state.progress}
+        color={"rgba( 156, 39, 176,1)"}
+        indeterminate={this.state.indeterminate}
+      />
+    );
+  };
+
   render() {
+    const { index, count, questions } = this.state;
+    const percenCorrect = (count / questions.length).toFixed(1);
+    const percenDone = ((index + 1) / questions.length).toFixed(1);
+    console.log(index < questions.length);
+
     return (
       <View style={styles.container}>
-       <ProgressBarAndroid styleAttr = "Horizontal"
-        progress = { 50 } indeterminate = { false } /> 
-        <FlipCard
-          flipHorizontal={true}
-          flipVertical={false}
-          perspective={1000}
-          style={styles.flipCard}
-          // style={{ borderWidth: 0, marginTop: 10 ,}}
-        >
-          {/* Face Side */}
-          <View style={{ flex: 1 }}>
-            <View style={{ flex: 4, alignItems: "center" }}>
-              <Text style={styles.flipText}>The Face</Text>
-            </View>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: "row",
-                justifyContent: "space-between"
-              }}
+        {index < questions.length ? (
+          <View style={{ height: "90%" }}>
+            <TxtSub> {`${index + 1}/${questions.length}`}</TxtSub>
+
+            <FlipCard
+              flipHorizontal={true}
+              flipVertical={false}
+              perspective={1000}
+              style={{ borderWidth: 0, marginTop: 10 }}
             >
-              <TouchableOpacity
-                style={{
-                  borderWidth: 0,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  width: 40,
-                  height: 40,
-                  backgroundColor: "#cb6ee1",
-                  borderRadius: 100,
-                  marginLeft:30
-                }}
-              >
-                <Icon name="x" size={30} color="#FFF" />
-                {/* <Icon name={"chevron-right"} size={30} color="#01a699" /> */}
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  borderWidth: 0,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  width: 40,
-                  height: 40,
-                  backgroundColor: "#cb6ee1",
-                  borderRadius: 100,
-                  marginRight:30
-                }}
-              >
-                <Icon name="check" size={30} color="#FFF" />
-                {/* <Icon name={"chevron-right"} size={30} color="#01a699" /> */}
-              </TouchableOpacity>
-            </View>
+              {/* Face Side */}
+              <TopView color="#9C27B0" justify="space-between">
+                <TxtSub color="#FFFFFF"> Pergunta</TxtSub>
+                <TextTitle color="#FFFFFF">
+                  {this.state.questions[index].question}
+                </TextTitle>
+                <Icon name="x" size={10} color="transparent" />
+              </TopView>
+              {/* Back Side */}
+
+              <TopView color="#00B89F" justify="space-between">
+                <TxtSub color="#FFFFFF"> Resposta</TxtSub>
+                <TextTitle color="#FFFFFF">
+                  {this.state.questions[index].answer}
+                </TextTitle>
+                <Buttons>
+                  <ButtonCircle onPress={this.onIncorrect}>
+                    <Icon name="x" size={30} color="#FFF" />
+                  </ButtonCircle>
+                  <ButtonCircle onPress={this.onCorrect}>
+                    <Icon name="check" size={30} color="#FFF" />
+                  </ButtonCircle>
+                </Buttons>
+              </TopView>
+            </FlipCard>
           </View>
-          {/* Back Side */}
-          <View >
-            <Text>The Back</Text>
-          </View>
-        </FlipCard>
+        ) : (
+          questions.length > 0 && this.greeting()
+        )}
       </View>
     );
   }
@@ -77,24 +130,7 @@ export default class Quiz extends React.PureComponent {
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    padding: 20,
-    backgroundColor: "#FFF"
-  },
-  flipCard: {
-    width: 280,
-    backgroundColor: "#9C27B0",
-    backfaceVisibility: "hidden",
-    borderWidth: 0
-  },
-  flipCardBack: {
-    backgroundColor: "red",
-    position: "absolute",
-    top: 0
-  },
-  flipText: {
-    width: 90,
-    fontSize: 20,
-    color: "white",
-    fontWeight: "bold"
+    backgroundColor: "#FFF",
+    height: "100%"
   }
 });

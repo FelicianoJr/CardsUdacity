@@ -8,6 +8,8 @@ export default class AddCards extends React.PureComponent {
     title: ""
   };
 
+  
+
   addCartao = () =>
     this.props.navigation.navigate("Register", {
       params: this.props.navigation.state.params
@@ -15,6 +17,7 @@ export default class AddCards extends React.PureComponent {
 
   render() {
     const params = this.props.navigation.state.params;
+    console.log(params);
     return (
       <BaseView>
         <TopView>
@@ -25,7 +28,7 @@ export default class AddCards extends React.PureComponent {
           <Button text="Adicionar Cartão" onpress={this.addCartao} />
           <Button
             text="Iniciar Quiz"
-            onpress={() =>   this.props.navigation.navigate("Quiz")}
+            onpress={() => this.props.navigation.navigate("Quiz", params.title)}
           />
         </BottonView>
       </BaseView>
