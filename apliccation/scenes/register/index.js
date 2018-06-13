@@ -23,14 +23,32 @@ export default class Register extends React.PureComponent {
   save = () => {
     const { question, answer } = this.state;
     const { params } = this.props.navigation.state.params;
+    if (!question || !answer) {
+      return this.alertFail();
+    }
     try {
       getDeck(params.title).then(deck => {
         addCardToDeck(params.title, { question, answer }, deck);
         this.alertOk();
       });
     } catch (error) {
-      console.log("Error saving data" + error);
+      console.log("Error " + error);
     }
+  };
+
+  alertFail = () => {
+    Alert.alert(
+      "",
+      "Digite uma pergunta e em seguida uma resposta!",
+      [
+        {
+          text: "OK"
+        }
+      ],
+      {
+        cancelable: false
+      }
+    );
   };
 
   alertOk = () => {
@@ -57,7 +75,7 @@ export default class Register extends React.PureComponent {
     return (
       <BaseView>
         <TopView>
-          <TextTitle> Digite uma Pergunta e uma Resposta!</TextTitle>
+          <TextTitle> Crie uma nova pergunta com resposta!</TextTitle>
         </TopView>
         <BottonView weight="2">
           <TextInput

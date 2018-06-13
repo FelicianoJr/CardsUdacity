@@ -1,8 +1,7 @@
 import React from "react";
 import { FlatList, Text, View } from "react-native";
-import { TouchableItem,TxtSub } from "../../util/style";
+import { TouchableItem, TxtSub } from "../../util/style";
 import { getDecks } from "../../api";
-
 const k = "#FFFFFF";
 
 export default class Decks extends React.PureComponent {

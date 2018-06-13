@@ -1,14 +1,17 @@
 import React from "react";
 import Button from "../../component/button";
-import { BaseView, TextTitle, TopView, BottonView } from "../../util/style";
-import { Text } from "react-native";
+import {
+  BaseView,
+  TextTitle,
+  TopView,
+  BottonView,
+  TxtSub
+} from "../../util/style";
 
 export default class AddCards extends React.PureComponent {
   static navigationOptions = {
-    title: ""
+    title: "Iniciar Quiz"
   };
-
-  
 
   addCartao = () =>
     this.props.navigation.navigate("Register", {
@@ -17,12 +20,12 @@ export default class AddCards extends React.PureComponent {
 
   render() {
     const params = this.props.navigation.state.params;
-    console.log(params);
+
     return (
       <BaseView>
         <TopView>
           <TextTitle> {params.title}</TextTitle>
-          <Text> {`${params.numCards} Cartões`}</Text>
+          <TxtSub fsize="18px"> {`${params.numCards} Cartões`}</TxtSub>
         </TopView>
         <BottonView weight="2">
           <Button text="Adicionar Cartão" onpress={this.addCartao} />

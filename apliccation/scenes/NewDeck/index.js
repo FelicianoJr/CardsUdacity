@@ -1,5 +1,5 @@
 import React from "react";
-import { AsyncStorage, Alert } from "react-native";
+import { Alert } from "react-native";
 import Button from "../../component/button";
 import {
   BaseView,
@@ -19,18 +19,17 @@ export default class NewDeck extends React.PureComponent {
     title: ""
   };
 
-  componentDidMount() {
-    // AsyncStorage.removeItem(DECKS_STORAGE_KEY);
-  }
-
   save = () => {
     const { title } = this.state;
+    if (!title) {
+      return this.alertFail();
+    }
     try {
       saveDeckTitle(title).then(response => {
         this.alertOk(title);
       });
     } catch (error) {
-      console.log("Error saving data" + error);
+      console.log("Error" + error);
     }
   };
 
@@ -42,6 +41,21 @@ export default class NewDeck extends React.PureComponent {
         {
           text: "OK",
           onPress: () => this.props.navigation.navigate("Decks", title)
+        }
+      ],
+      {
+        cancelable: false
+      }
+    );
+  };
+
+  alertFail = () => {
+    Alert.alert(
+      "",
+      "Digite um titulo para o baralho!",
+      [
+        {
+          text: "OK"
         }
       ],
       {

@@ -5,7 +5,6 @@
  */
 
 import React, { Component } from "react";
-import { Platform, StyleSheet, View, Text } from "react-native";
 import { StackNavigator } from "react-navigation";
 import Home from "./apliccation/scenes/home";
 import Register from "./apliccation/scenes/register";
@@ -34,6 +33,7 @@ const RootStack = StackNavigator(
     Quiz: {
       screen: Quiz
     }
+   
   },
   {
     initialRouteName: "Home",

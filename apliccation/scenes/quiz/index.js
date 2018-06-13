@@ -1,16 +1,18 @@
 import React from "react";
 import FlipCard from "react-native-flip-card";
-import * as Progress from "react-native-progress";
-import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
+import { View, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
 import {
-  Buttons,
   TopView,
   TxtSub,
   ButtonCircle,
-  TextTitle
+  TextTitle,
+  GroupButton,
+  ViewFlip
 } from "../../util/style";
 import { getDeck } from "../../api";
+import Button from "../../component/button";
+import  {cancelNotification, initialNotification}  from "../../notification";
 
 export default class Quiz extends React.PureComponent {
   static navigationOptions = {
@@ -20,9 +22,7 @@ export default class Quiz extends React.PureComponent {
   state = {
     questions: {},
     index: 0,
-    count: 0,
-    progress: 0,
-    indeterminate: true
+    count: 0
   };
 
   componentDidMount() {
@@ -31,58 +31,39 @@ export default class Quiz extends React.PureComponent {
       const questions = response.questions;
       this.setState({ questions });
     });
-    //this.animate();
   }
 
-  onCorrect = () => {
+  right = () => {
     this.setState(({ count, index }) => ({
       count: count + 1,
       index: index + 1
     }));
   };
 
-  onIncorrect = () => {
+  noRight = () => {
     this.setState(({ index }) => ({
       index: index + 1
     }));
   };
 
-  animate = () => {
-    let progress = 0;
-    this.setState({ progress });
-    setTimeout(() => {
-      this.setState({ indeterminate: false });
-      setInterval(() => {
-        progress += Math.random() / 5;
-        if (progress > 1) {
-          progress = 1;
-        }
-        this.setState({ progress });
-      }, 500);
-    }, 1000);
-  };
-
-  greeting = () => {
-    this.animate();
+  getResult = () => {
+    const { count, questions } = this.state;
+    const correct = ((count / questions.length) * 100).toFixed(0);
+    initialNotification();
     return (
-      <Progress.Circle
-        size={150}
-        showsText={true}
-        progress={this.state.progress}
-        color={"rgba( 156, 39, 176,1)"}
-        indeterminate={this.state.indeterminate}
-      />
+      <View>
+        <TextTitle>{`Você acertou ${correct}%`}</TextTitle>
+        <TextTitle>{`Testou ${questions.length} cartões`}</TextTitle>
+        <Button text="Voltar" onpress={() => this.props.navigation.goBack()} />
+      </View>
     );
   };
 
   render() {
-    const { index, count, questions } = this.state;
-    const percenCorrect = (count / questions.length).toFixed(1);
-    const percenDone = ((index + 1) / questions.length).toFixed(1);
-    console.log(index < questions.length);
+    const { index, questions } = this.state;
 
     return (
-      <View style={styles.container}>
+      <ViewFlip>
         {index < questions.length ? (
           <View style={{ height: "90%" }}>
             <TxtSub> {`${index + 1}/${questions.length}`}</TxtSub>
@@ -108,29 +89,21 @@ export default class Quiz extends React.PureComponent {
                 <TextTitle color="#FFFFFF">
                   {this.state.questions[index].answer}
                 </TextTitle>
-                <Buttons>
-                  <ButtonCircle onPress={this.onIncorrect}>
+                <GroupButton>
+                  <ButtonCircle onPress={this.noRight}>
                     <Icon name="x" size={30} color="#FFF" />
                   </ButtonCircle>
-                  <ButtonCircle onPress={this.onCorrect}>
+                  <ButtonCircle onPress={this.right}>
                     <Icon name="check" size={30} color="#FFF" />
                   </ButtonCircle>
-                </Buttons>
+                </GroupButton>
               </TopView>
             </FlipCard>
           </View>
         ) : (
-          questions.length > 0 && this.greeting()
+          questions.length > 0 && this.getResult()
         )}
-      </View>
+      </ViewFlip>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-    backgroundColor: "#FFF",
-    height: "100%"
-  }
-});

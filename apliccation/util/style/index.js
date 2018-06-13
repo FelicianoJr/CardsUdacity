@@ -1,13 +1,6 @@
 import styled from "styled-components";
 import { Dimensions } from "react-native";
 
-
-export const ContentOption = styled.View`
-  flex-direction: row;
-  margin: 40px 0;
-  align-items: center;
-`;
-
 export const BaseView = styled.View`
   flex: 1;
   padding: 10px;
@@ -19,6 +12,12 @@ export const TopView = styled.View`
   justify-content: ${props => props.justify || "center"};
   width: ${Dimensions.get("window").width - 55};
   background-color: ${props => props.color || "transparent"};
+`;
+
+export const ViewFlip = styled.View`
+  align-items: center;
+  background-color:#FFFFFF;
+  height:${props => props.height || "100%"};
 `;
 
 export const BottonView = styled.View`
@@ -43,6 +42,7 @@ export const TextTitle = styled.Text`
   height: 80px;
   align-items: center;
   margin-top: 10px;
+  justify-content: center;
   font-size: 26px;
   color: ${props => props.color || "#ba68c8"};
   font-weight: bold;
@@ -57,7 +57,7 @@ export const TextButton = styled.Text`
 `;
 
 export const TouchableItem = styled.TouchableOpacity`
-  background-color: #ffffff;
+  background-color:${props => props.color || "#FFFFFF"};
   align-items: center;
   padding: 20px;
   margin-top: 2px;
@@ -81,7 +81,7 @@ export const TxtSub = styled.Text`
   padding-top: 5px;
 `;
 
-export const Buttons = styled.View`
+export const GroupButton = styled.View`
     flex-direction:row;
     width:100%;
     justify-content:space-between
