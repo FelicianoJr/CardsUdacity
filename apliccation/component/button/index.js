@@ -1,5 +1,5 @@
 import React from "react";
-import { Touchable, TextButton } from "../../util/style";
+import { Touchable, TextButton } from "../../component/styled";
 
 const Button = ({ onpress, text, icon }) => {
   return (

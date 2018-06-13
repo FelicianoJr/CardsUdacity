@@ -7,7 +7,7 @@ import {
   TextInput,
   TopView,
   BottonView
-} from "../../util/style";
+} from "../../component/styled";
 import { saveDeckTitle } from "../../api";
 
 export default class NewDeck extends React.PureComponent {
@@ -27,6 +27,7 @@ export default class NewDeck extends React.PureComponent {
     try {
       saveDeckTitle(title).then(response => {
         this.alertOk(title);
+        this.setState({ title: "" });
       });
     } catch (error) {
       console.log("Error" + error);

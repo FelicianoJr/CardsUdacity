@@ -1,6 +1,6 @@
 import React from "react";
 import FlipCard from "react-native-flip-card";
-import { View, StyleSheet } from "react-native";
+import { View } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
 import {
   TopView,
@@ -9,10 +9,10 @@ import {
   TextTitle,
   GroupButton,
   ViewFlip
-} from "../../util/style";
+} from "../../component/styled";
 import { getDeck } from "../../api";
 import Button from "../../component/button";
-import  {cancelNotification, initialNotification}  from "../../notification";
+import { cancelNotification, initialNotification } from "../../notification";
 
 export default class Quiz extends React.PureComponent {
   static navigationOptions = {

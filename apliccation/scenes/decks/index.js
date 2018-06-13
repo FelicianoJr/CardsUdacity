@@ -1,8 +1,8 @@
 import React from "react";
 import { FlatList, Text, View } from "react-native";
-import { TouchableItem, TxtSub } from "../../util/style";
+import { TouchableItem, TxtSub } from "../../component/styled";
 import { getDecks } from "../../api";
-const k = "#FFFFFF";
+const color = "#FFFFFF";
 
 export default class Decks extends React.PureComponent {
   static navigationOptions = {
@@ -19,7 +19,7 @@ export default class Decks extends React.PureComponent {
 
   renderCards = ({ item }) => (
     <TouchableItem
-      color={k}
+      color={color}
       onPress={() => this.props.navigation.navigate("AddCards", item)}
     >
       <TxtSub fsize="20px">{item.title}</TxtSub>

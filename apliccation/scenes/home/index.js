@@ -1,5 +1,10 @@
 import React from "react";
-import { BaseView, TextTitle, TopView, BottonView } from "../../util/style";
+import {
+  BaseView,
+  TextTitle,
+  TopView,
+  BottonView
+} from "../../component/styled";
 import Button from "../../component/button";
 import Icon from "react-native-vector-icons/Entypo";
 
@@ -13,7 +18,7 @@ export default class Home extends React.PureComponent {
       <BaseView>
         <TopView>
           <Icon name="documents" size={70} color="#9c27b0" />
-          <TextTitle>Jogo da Memória</TextTitle>
+          <TextTitle>Memorize</TextTitle>
         </TopView>
         <BottonView>
           <Button
@@ -26,7 +31,6 @@ export default class Home extends React.PureComponent {
             icon="rocket"
             onpress={() => this.props.navigation.navigate("Decks")}
           />
-
         </BottonView>
       </BaseView>
     );

@@ -6,7 +6,7 @@ import {
   TextTitle,
   TopView,
   BottonView
-} from "../../util/style";
+} from "../../component/styled";
 import Button from "../../component/button";
 import { addCardToDeck, getDeck } from "../../api";
 
@@ -58,7 +58,7 @@ export default class Register extends React.PureComponent {
       [
         {
           text: "OK",
-          onPress: () => this.props.navigation.goBack()
+          onPress: () => this.goBackView()
         }
       ],
       {
@@ -67,9 +67,15 @@ export default class Register extends React.PureComponent {
     );
   };
 
-  handleAnswer = answer => this.setState({ answer });
+  goBackView() {
+    const { navigation } = this.props;
+    navigation.goBack();
+    navigation.state.params.updateCount(1);
+  }
 
-  handleQuestion = question => this.setState({ question });
+  inputAnswer = answer => this.setState({ answer });
+
+  inputQuestion = question => this.setState({ question });
 
   render() {
     return (
@@ -81,12 +87,12 @@ export default class Register extends React.PureComponent {
           <TextInput
             placeholder="Informe a Pergunta"
             value={this.state.question}
-            onChangeText={this.handleQuestion}
+            onChangeText={this.inputQuestion}
           />
           <TextInput
             placeholder="Informe a Resposta"
             value={this.state.answer}
-            onChangeText={this.handleAnswer}
+            onChangeText={this.inputAnswer}
           />
           <Button text="Salvar" onpress={this.save} />
         </BottonView>

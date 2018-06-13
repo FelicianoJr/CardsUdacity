@@ -6,26 +6,42 @@ import {
   TopView,
   BottonView,
   TxtSub
-} from "../../util/style";
+} from "../../component/styled";
 
 export default class AddCards extends React.PureComponent {
   static navigationOptions = {
     title: "Iniciar Quiz"
   };
 
+  state = {
+    count: 0
+  };
+
+  componentDidMount() {
+    const params = this.props.navigation.state.params;
+    this.setState({ count: params.numCards });
+  }
+
   addCartao = () =>
     this.props.navigation.navigate("Register", {
-      params: this.props.navigation.state.params
+      params: this.props.navigation.state.params,
+      updateCount: this.updateCount
     });
+
+  updateCount = () => {
+    this.setState(({ count }) => ({
+      count: count + 1
+    }));
+  };
 
   render() {
     const params = this.props.navigation.state.params;
-
+    const { count } = this.state;
     return (
       <BaseView>
         <TopView>
           <TextTitle> {params.title}</TextTitle>
-          <TxtSub fsize="18px"> {`${params.numCards} Cartões`}</TxtSub>
+          <TxtSub fsize="18px"> {`${count} Cartões`}</TxtSub>
         </TopView>
         <BottonView weight="2">
           <Button text="Adicionar Cartão" onpress={this.addCartao} />
