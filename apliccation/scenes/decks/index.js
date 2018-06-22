@@ -1,12 +1,19 @@
 import React from "react";
-import { FlatList, Text, View } from "react-native";
+import { FlatList, View } from "react-native";
 import { TouchableItem, TxtSub } from "../../component/styled";
 import { getDecks } from "../../api";
 const color = "#FFFFFF";
 
-export default class Decks extends React.PureComponent {
-  static navigationOptions = {
-    title: "Meus Baralhos"
+export default class Decks extends React.Component {
+  static navigationOptions = ({ navigation }) => {
+    return {
+      tabBarOnPress: ({ jumpToIndex, scene }) => {
+        if (!scene.focused) {
+          jumpToIndex(scene.index);
+          navigation.state.params.onFocus();
+        }
+      }
+    };
   };
 
   state = {
@@ -14,13 +21,21 @@ export default class Decks extends React.PureComponent {
   };
 
   componentDidMount() {
-    getDecks().then(response => this.setState({ data: response }));
+    this.props.navigation.setParams({
+      onFocus: this._onDecks.bind(this)
+    });
+
+    this._onDecks();
   }
+
+  _onDecks = () => {
+    getDecks().then(response => this.setState({ data: response }));
+  };
 
   renderCards = ({ item }) => (
     <TouchableItem
       color={color}
-      onPress={() => this.props.navigation.navigate("AddCards", item)}
+      onPress={() => this.props.navigation.navigate("DeckView", item)}
     >
       <TxtSub fsize="20px">{item.title}</TxtSub>
       <TxtSub>{`${item.numCards} Cartões`}</TxtSub>

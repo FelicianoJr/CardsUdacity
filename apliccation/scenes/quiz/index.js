@@ -12,7 +12,7 @@ import {
 } from "../../component/styled";
 import { getDeck } from "../../api";
 import Button from "../../component/button";
-import { cancelNotification, initialNotification } from "../../notification";
+import { initialNotification } from "../../notification";
 
 export default class Quiz extends React.PureComponent {
   static navigationOptions = {
@@ -24,7 +24,7 @@ export default class Quiz extends React.PureComponent {
     index: 0,
     count: 0
   };
-
+  
   componentDidMount() {
     const params = this.props.navigation.state.params;
     getDeck(params).then(response => {
@@ -54,7 +54,8 @@ export default class Quiz extends React.PureComponent {
       <View>
         <TextTitle>{`Você acertou ${correct}%`}</TextTitle>
         <TextTitle>{`Testou ${questions.length} cartões`}</TextTitle>
-        <Button text="Voltar" onpress={() => this.props.navigation.goBack()} />
+        <Button text="Voltar ao baralho" onpress={() => this.props.navigation.goBack()} />
+        <Button text="Resetar" onpress={() => this.props.navigation.goBack()} />
       </View>
     );
   };
@@ -75,7 +76,7 @@ export default class Quiz extends React.PureComponent {
               style={{ borderWidth: 0, marginTop: 10 }}
             >
               {/* Face Side */}
-              <TopView color="#9C27B0" justify="space-between">
+              <TopView color="purple" justify="space-between">
                 <TxtSub color="#FFFFFF"> Pergunta</TxtSub>
                 <TextTitle color="#FFFFFF">
                   {this.state.questions[index].question}

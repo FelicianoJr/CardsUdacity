@@ -26,7 +26,7 @@ export const BottonView = styled.View`
 
 export const Touchable = styled.TouchableOpacity`
   align-items: center;
-  background: #9c27b0;
+  background: purple;
   padding: 16px;
   margin-top: 15px;
 `;
@@ -44,7 +44,7 @@ export const TextTitle = styled.Text`
   margin-top: 10px;
   justify-content: center;
   font-size: 26px;
-  color: ${props => props.color || "#ba68c8"};
+  color: ${props => props.color || "purple"};
   font-weight: bold;
   padding-left:20px;
 `;
@@ -64,7 +64,7 @@ export const TouchableItem = styled.TouchableOpacity`
 `;
 
 export const ButtonCircle = styled.TouchableOpacity`
-  background-color: #9C27B0;
+  background-color: purple;
   align-items: center;
   justify-content: center;
   border-radius:100px;
@@ -75,7 +75,7 @@ export const ButtonCircle = styled.TouchableOpacity`
 
 export const TxtSub = styled.Text`
   font-size: ${props => props.fsize || "16px"};
-  color: ${props => props.color || "#ba68c8"};
+  color: ${props => props.color || "purple"};
   font-weight: bold;
   padding-bottom: 5px;
   padding-top: 5px;

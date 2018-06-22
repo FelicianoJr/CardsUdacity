@@ -11,10 +11,7 @@ import {
 import { saveDeckTitle } from "../../api";
 
 export default class NewDeck extends React.PureComponent {
-  static navigationOptions = {
-    title: "Novo Baralho"
-  };
-
+  
   state = {
     title: ""
   };
@@ -41,7 +38,11 @@ export default class NewDeck extends React.PureComponent {
       [
         {
           text: "OK",
-          onPress: () => this.props.navigation.navigate("Decks", title)
+          onPress: () =>
+            this.props.navigation.navigate("DeckView", {
+              title: title,
+              numCards: 0
+            })
         }
       ],
       {

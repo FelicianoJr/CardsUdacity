@@ -8,18 +8,19 @@ import {
   TxtSub
 } from "../../component/styled";
 
-export default class AddCards extends React.PureComponent {
-  static navigationOptions = {
-    title: "Iniciar Quiz"
-  };
+export default class DeckView extends React.PureComponent {
+  static navigationOptions = ({ navigation }) => ({
+    title: navigation.state.params.title
+  });
 
   state = {
+    title: "",
     count: 0
   };
 
   componentDidMount() {
     const params = this.props.navigation.state.params;
-    this.setState({ count: params.numCards });
+    this.setState({ count: params.numCards, title: params.title });
   }
 
   addCartao = () =>
@@ -45,10 +46,14 @@ export default class AddCards extends React.PureComponent {
         </TopView>
         <BottonView weight="2">
           <Button text="Adicionar Cartão" onpress={this.addCartao} />
-          <Button
-            text="Iniciar Quiz"
-            onpress={() => this.props.navigation.navigate("Quiz", params.title)}
-          />
+          {count > 0 && (
+            <Button
+              text="Iniciar Quiz"
+              onpress={() =>
+                this.props.navigation.navigate("Quiz", params.title)
+              }
+            />
+          )}
         </BottonView>
       </BaseView>
     );
