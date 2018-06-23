@@ -34,7 +34,8 @@ const Tabs = TabNavigator(
     tabBarOptions: {
       activeTintColor: "white",
       labelStyle: {
-        fontSize: 12
+        fontSize: 12,
+        fontWeight:"bold"
       },
       style: {
         backgroundColor: "purple"

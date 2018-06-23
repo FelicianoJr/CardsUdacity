@@ -10,7 +10,7 @@ import {
 
 export default class DeckView extends React.PureComponent {
   static navigationOptions = ({ navigation }) => ({
-    title: navigation.state.params.title
+    title: navigation.state.params.title,
   });
 
   state = {
@@ -29,11 +29,19 @@ export default class DeckView extends React.PureComponent {
       updateCount: this.updateCount
     });
 
+  backButtonClick = () => {
+    this.props.navigation.state.params.onDecks();
+    // this.props.navigation.goBack(null);
+    return true;
+  };
+
   updateCount = () => {
     this.setState(({ count }) => ({
       count: count + 1
     }));
   };
+
+  
 
   render() {
     const params = this.props.navigation.state.params;

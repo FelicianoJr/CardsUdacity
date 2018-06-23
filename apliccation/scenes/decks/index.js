@@ -1,6 +1,11 @@
 import React from "react";
 import { FlatList, View } from "react-native";
-import { TouchableItem, TxtSub } from "../../component/styled";
+import {
+  TouchableItem,
+  TxtSub,
+  BaseView,
+  TopView
+} from "../../component/styled";
 import { getDecks } from "../../api";
 const color = "#FFFFFF";
 
@@ -17,12 +22,12 @@ export default class Decks extends React.Component {
   };
 
   state = {
-    data: {}
+    data: []
   };
 
   componentDidMount() {
     this.props.navigation.setParams({
-      onFocus: this._onDecks.bind(this)
+      onFocus: this._onDecks
     });
 
     this._onDecks();
@@ -45,10 +50,17 @@ export default class Decks extends React.Component {
   render() {
     return (
       <View>
+        {Object.keys(this.state.data).length === 0 && (
+          <BaseView>
+            <TxtSub fsize="15px">Nenhum baralho criado!</TxtSub>
+          </BaseView>
+        )}
         <FlatList
           data={this.state.data}
           keyExtractor={item => item.title}
           renderItem={this.renderCards}
+          onRefresh={this._onDecks}
+          refreshing={false}
         />
       </View>
     );

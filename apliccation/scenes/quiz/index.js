@@ -24,7 +24,7 @@ export default class Quiz extends React.PureComponent {
     index: 0,
     count: 0
   };
-  
+
   componentDidMount() {
     const params = this.props.navigation.state.params;
     getDeck(params).then(response => {
@@ -54,10 +54,20 @@ export default class Quiz extends React.PureComponent {
       <View>
         <TextTitle>{`Você acertou ${correct}%`}</TextTitle>
         <TextTitle>{`Testou ${questions.length} cartões`}</TextTitle>
-        <Button text="Voltar ao baralho" onpress={() => this.props.navigation.goBack()} />
-        <Button text="Resetar" onpress={() => this.props.navigation.goBack()} />
+        <Button
+          text="Voltar ao baralho"
+          onpress={() => this.props.navigation.goBack()}
+        />
+        <Button
+          text="Reiniciar o quiz"
+          onpress={this.resetQuiz}
+        />
       </View>
     );
+  };
+
+  resetQuiz = () => {
+    this.setState({ index: 0, count: 0 });
   };
 
   render() {
